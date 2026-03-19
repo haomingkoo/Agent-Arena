@@ -1,0 +1,10 @@
+[build]
+builder = "nixpacks"
+
+[build.nixpacks]
+providers = ["python", "node"]
+
+[deploy]
+startCommand = "bash start.sh"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 10

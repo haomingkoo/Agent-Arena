@@ -1,0 +1,444 @@
+{
+  "lockfile-version": 1,
+  "manifest": {
+    "version": 1,
+    "install": {
+      "jq": {
+        "pkg-path": "jq"
+      },
+      "python3": {
+        "pkg-path": "python312"
+      },
+      "sqlite": {
+        "pkg-path": "sqlite"
+      }
+    },
+    "vars": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONUNBUFFERED": "1"
+    },
+    "hook": {
+      "on-activate": "  # Create or reuse Python venv\n  if [ ! -d \"$FLOX_ENV_PROJECT/.venv\" ]; then\n    echo \"📦 Creating Python venv...\"\n    python3 -m venv \"$FLOX_ENV_PROJECT/.venv\"\n  fi\n  source \"$FLOX_ENV_PROJECT/.venv/bin/activate\"\n\n  # Install dependencies if requirements changed\n  REQ=\"$FLOX_ENV_PROJECT/requirements.txt\"\n  MARKER=\"$FLOX_ENV_PROJECT/.venv/.deps-installed\"\n  if [ \"$REQ\" -nt \"$MARKER\" ] 2>/dev/null || [ ! -f \"$MARKER\" ]; then\n    echo \"📦 Installing Python dependencies...\"\n    pip install -q -r \"$REQ\" && touch \"$MARKER\"\n  fi\n\n  # Source .env if present\n  if [ -f \"$FLOX_ENV_PROJECT/.env\" ]; then\n    set -a\n    source \"$FLOX_ENV_PROJECT/.env\"\n    set +a\n  fi\n"
+    },
+    "profile": {
+      "common": "  echo \"\"\n  echo \"  Workflow Harvester dev environment\"\n  echo \"  ─────────────────────────────────\"\n  echo \"  python main.py          — run scraping pipeline\"\n  echo \"  python onboard.py       — onboard agents to registry\"\n  echo \"  python search.py \\\"...\\\"  — semantic search\"\n  echo \"  flox services start     — start API server\"\n  echo \"  flox services status    — check service status\"\n  echo \"\"\n"
+    },
+    "options": {
+      "systems": [
+        "aarch64-darwin",
+        "x86_64-darwin",
+        "aarch64-linux",
+        "x86_64-linux"
+      ]
+    },
+    "services": {
+      "api": {
+        "command": "uvicorn api.app:app --host 0.0.0.0 --port 8000"
+      }
+    }
+  },
+  "packages": [
+    {
+      "attr_path": "jq",
+      "broken": false,
+      "derivation": "/nix/store/qw1aw7fflrnw6wwv53awk4ydwzibq9mq-jq-1.8.1.drv",
+      "description": "Lightweight and flexible command-line JSON processor",
+      "install_id": "jq",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "jq-1.8.1",
+      "pname": "jq",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T04:42:18.865045Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.1",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/qclllhrddhsqs87zrjhb0rikj9vh382g-jq-1.8.1-bin",
+        "dev": "/nix/store/2hj3wiwnf5yjp0n176wgyd9f0ln11zhz-jq-1.8.1-dev",
+        "doc": "/nix/store/im47zqjcdg2bhx97fkwvx7p1yzi098hz-jq-1.8.1-doc",
+        "man": "/nix/store/fw0rb615pja12zpdqdn4w8bxvb310pf9-jq-1.8.1-man",
+        "out": "/nix/store/w513pwkks3lw9ligjigpqniqj3dbipsl-jq-1.8.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "jq",
+      "broken": false,
+      "derivation": "/nix/store/vnhc12p5h912mimz152dxmpi81apbhzs-jq-1.8.1.drv",
+      "description": "Lightweight and flexible command-line JSON processor",
+      "install_id": "jq",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "jq-1.8.1",
+      "pname": "jq",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T05:15:36.699783Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.1",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/bnsyxn71xzc4nd86k6j25wmzncir628l-jq-1.8.1-bin",
+        "dev": "/nix/store/3iy3f3m2ikjsw8bmx7485flysxj1vgk7-jq-1.8.1-dev",
+        "doc": "/nix/store/rdp9243l8x6pqmcrz99nwa4kf25km9w7-jq-1.8.1-doc",
+        "man": "/nix/store/bl1f8rn2amdw86y6zyxybpz0g9bkd4yw-jq-1.8.1-man",
+        "out": "/nix/store/zglcyjcxpsnqq4ip8w2myqmlv08641b0-jq-1.8.1"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "jq",
+      "broken": false,
+      "derivation": "/nix/store/363myv3kz0phrdvrqjdiqqccqbbzw6g5-jq-1.8.1.drv",
+      "description": "Lightweight and flexible command-line JSON processor",
+      "install_id": "jq",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "jq-1.8.1",
+      "pname": "jq",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T05:46:24.917608Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.1",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/silqkfms6xjsaq0w3m0g6ygl4zj9992c-jq-1.8.1-bin",
+        "dev": "/nix/store/504ml9mmnn1b1y50i6dd13kbadg4kwj9-jq-1.8.1-dev",
+        "doc": "/nix/store/yqm1xgg9ivm1jlkn2x0bwyc3l499cw4i-jq-1.8.1-doc",
+        "man": "/nix/store/034cqaasry6lv5nc3nkngp2p1ww3rib6-jq-1.8.1-man",
+        "out": "/nix/store/hjc1gxah0mlc523mr4h9mxwzk7nx96hq-jq-1.8.1"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "jq",
+      "broken": false,
+      "derivation": "/nix/store/s6gwsi3f47wxr7a30q668kcfpckznkxn-jq-1.8.1.drv",
+      "description": "Lightweight and flexible command-line JSON processor",
+      "install_id": "jq",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "jq-1.8.1",
+      "pname": "jq",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T06:22:52.184257Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.1",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "bin",
+        "man",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/jyi1vkcbaihqbfbra4qd0107sj1jhdk4-jq-1.8.1-bin",
+        "dev": "/nix/store/1m6s8nd3x7s7jddjdgydq10c5wj4dj4h-jq-1.8.1-dev",
+        "doc": "/nix/store/51isxd9mi828n238hj3572vmfx12msp1-jq-1.8.1-doc",
+        "man": "/nix/store/lqxm904bymdhvi8fc2l6gpj0n4wq33a8-jq-1.8.1-man",
+        "out": "/nix/store/70bwclvic12925zck7za5y9g761l9kkh-jq-1.8.1"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "python312",
+      "broken": false,
+      "derivation": "/nix/store/l1pi342fiiaxm33yp6apcw2n14i3760y-python3-3.12.13.drv",
+      "description": "High-level dynamically-typed programming language",
+      "install_id": "python3",
+      "license": "Python-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "python3-3.12.13",
+      "pname": "python312",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T04:42:43.555479Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "python3-3.12.13",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/0kpmn91hpcg7fx0kd4ji2blhnigzvw98-python3-3.12.13"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "python312",
+      "broken": false,
+      "derivation": "/nix/store/2hj4hl101f5p65aiy4q91kjy61zh6bwl-python3-3.12.13.drv",
+      "description": "High-level dynamically-typed programming language",
+      "install_id": "python3",
+      "license": "Python-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "python3-3.12.13",
+      "pname": "python312",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T05:16:18.278616Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "python3-3.12.13",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "debug": "/nix/store/qj5pnvfqcdf34ri8fwdpk8dbz3fdk5lz-python3-3.12.13-debug",
+        "out": "/nix/store/n7zacbangs6qzrfb8xg8b5cqkxcv6499-python3-3.12.13"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "python312",
+      "broken": false,
+      "derivation": "/nix/store/p8nq1wpqx0hxvnlf8a3m1cq5kbrn2wi4-python3-3.12.13.drv",
+      "description": "High-level dynamically-typed programming language",
+      "install_id": "python3",
+      "license": "Python-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "python3-3.12.13",
+      "pname": "python312",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T05:46:48.924348Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "python3-3.12.13",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/gjw0dj160905a2z35r5pv9gb50mnav7r-python3-3.12.13"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "python312",
+      "broken": false,
+      "derivation": "/nix/store/3qx6ckmpmcc0r1hgwb1rgpcjcgfrphic-python3-3.12.13.drv",
+      "description": "High-level dynamically-typed programming language",
+      "install_id": "python3",
+      "license": "Python-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "python3-3.12.13",
+      "pname": "python312",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T06:23:37.230176Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "python3-3.12.13",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "debug": "/nix/store/zacz4qsg5g7z60ajw1s3jnmpf0vkr1f4-python3-3.12.13-debug",
+        "out": "/nix/store/ja66iyv96y1cbjhj7fl5ghqqmy9fyacj-python3-3.12.13"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "sqlite",
+      "broken": false,
+      "derivation": "/nix/store/w94ca37aw1wyc3pbl0a3hqiv7ci6yzjr-sqlite-3.51.2.drv",
+      "description": "Self-contained, serverless, zero-configuration, transactional SQL database engine",
+      "install_id": "sqlite",
+      "license": "Public Domain",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "sqlite-3.51.2",
+      "pname": "sqlite",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T04:43:53.888210Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.51.2",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/h7mm7vizdfzx9dkz8yvq1h3z1dkvk68k-sqlite-3.51.2-bin",
+        "dev": "/nix/store/g3pqc7h5cyvq69xi1ci4s73cn3h5rx93-sqlite-3.51.2-dev",
+        "doc": "/nix/store/wkgrqxrqkn7pg26g9r02amdbhgqqa596-sqlite-3.51.2-doc",
+        "man": "/nix/store/3rr70fkzzwyvizkjbghbpfyy0xnpk7c8-sqlite-3.51.2-man",
+        "out": "/nix/store/n78wl37nhy4qfspmkl37ib43fl9mgzkl-sqlite-3.51.2"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "sqlite",
+      "broken": false,
+      "derivation": "/nix/store/2k90r7kdjkj257vihjas83q5af4h1ib7-sqlite-3.51.2.drv",
+      "description": "Self-contained, serverless, zero-configuration, transactional SQL database engine",
+      "install_id": "sqlite",
+      "license": "Public Domain",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "sqlite-3.51.2",
+      "pname": "sqlite",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T05:17:45.937620Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.51.2",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/8nlaycnvd4dc6q7vdh9nmda5rfw2wq1l-sqlite-3.51.2-bin",
+        "debug": "/nix/store/wr8dr1fpnv9qb4n3hvl8h56yf613605w-sqlite-3.51.2-debug",
+        "dev": "/nix/store/hxcb0bf92dz5xm5i9ksb54m78d9mnbkv-sqlite-3.51.2-dev",
+        "doc": "/nix/store/66hhhlpis6bxgvjq2bnd7m97qryzmpjd-sqlite-3.51.2-doc",
+        "man": "/nix/store/q391c8xkvjy9q7qr2h18f6hci3gsyfmy-sqlite-3.51.2-man",
+        "out": "/nix/store/0abc9j54cpa41gmdcibp2hcyycd4w2dx-sqlite-3.51.2"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "sqlite",
+      "broken": false,
+      "derivation": "/nix/store/878dknh8acmn50hrw2pm79rgzrm5m2ng-sqlite-3.51.2.drv",
+      "description": "Self-contained, serverless, zero-configuration, transactional SQL database engine",
+      "install_id": "sqlite",
+      "license": "Public Domain",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "sqlite-3.51.2",
+      "pname": "sqlite",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T05:47:55.905928Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.51.2",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/3n7rwbzrqg3v9x1zkcyca2p7vqn6006k-sqlite-3.51.2-bin",
+        "dev": "/nix/store/vwzw5yj8z88sza9sczg9ra8lfx6zqv1f-sqlite-3.51.2-dev",
+        "doc": "/nix/store/s7dhcwp8c67s3711g3cavn8pcm7q6d0d-sqlite-3.51.2-doc",
+        "man": "/nix/store/6n9alxra4pk4gcvirric8676p0nvajgx-sqlite-3.51.2-man",
+        "out": "/nix/store/vr5ff6vjdy7z2g7zsnr2fhd83fdb22j6-sqlite-3.51.2"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "sqlite",
+      "broken": false,
+      "derivation": "/nix/store/694v38pcxlnj0pzslmhwgyxzr3sdravh-sqlite-3.51.2.drv",
+      "description": "Self-contained, serverless, zero-configuration, transactional SQL database engine",
+      "install_id": "sqlite",
+      "license": "Public Domain",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "name": "sqlite-3.51.2",
+      "pname": "sqlite",
+      "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+      "rev_count": 962285,
+      "rev_date": "2026-03-12T02:28:01Z",
+      "scrape_date": "2026-03-14T06:25:09.941373Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.51.2",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/k87a0gv4hg1zmm8j5d3ffmxyvhr13i41-sqlite-3.51.2-bin",
+        "debug": "/nix/store/npq7nfarcsgqd0ks8x0crlksiy5lvvfn-sqlite-3.51.2-debug",
+        "dev": "/nix/store/5j4mx4vckmmms2spy8x8kqjxcb12kpf5-sqlite-3.51.2-dev",
+        "doc": "/nix/store/ggx362g7cci0gjlyd3kc39gcbkwrzvkz-sqlite-3.51.2-doc",
+        "man": "/nix/store/msdk5dj7zsrxyzdfirfdj2pgff5s2qbn-sqlite-3.51.2-man",
+        "out": "/nix/store/whs07fdxlw22fi8b3jzd2z871dh41qx6-sqlite-3.51.2"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    }
+  ]
+}

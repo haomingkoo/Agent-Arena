@@ -1,0 +1,55 @@
+## Flox Environment — Workflow Harvester
+version = 1
+
+[install]
+python3.pkg-path = "python312"
+sqlite.pkg-path = "sqlite"
+jq.pkg-path = "jq"
+
+[vars]
+PYTHONUNBUFFERED = "1"
+PYTHONDONTWRITEBYTECODE = "1"
+
+[hook]
+on-activate = '''
+  # Create or reuse Python venv
+  if [ ! -d "$FLOX_ENV_PROJECT/.venv" ]; then
+    echo "📦 Creating Python venv..."
+    python3 -m venv "$FLOX_ENV_PROJECT/.venv"
+  fi
+  source "$FLOX_ENV_PROJECT/.venv/bin/activate"
+
+  # Install dependencies if requirements changed
+  REQ="$FLOX_ENV_PROJECT/requirements.txt"
+  MARKER="$FLOX_ENV_PROJECT/.venv/.deps-installed"
+  if [ "$REQ" -nt "$MARKER" ] 2>/dev/null || [ ! -f "$MARKER" ]; then
+    echo "📦 Installing Python dependencies..."
+    pip install -q -r "$REQ" && touch "$MARKER"
+  fi
+
+  # Source .env if present
+  if [ -f "$FLOX_ENV_PROJECT/.env" ]; then
+    set -a
+    source "$FLOX_ENV_PROJECT/.env"
+    set +a
+  fi
+'''
+
+[profile]
+common = '''
+  echo ""
+  echo "  Workflow Harvester dev environment"
+  echo "  ─────────────────────────────────"
+  echo "  python main.py          — run scraping pipeline"
+  echo "  python onboard.py       — onboard agents to registry"
+  echo "  python search.py \"...\"  — semantic search"
+  echo "  flox services start     — start API server"
+  echo "  flox services status    — check service status"
+  echo ""
+'''
+
+[services]
+api.command = "uvicorn api.app:app --host 0.0.0.0 --port 8000"
+
+[options]
+systems = ["aarch64-darwin", "x86_64-darwin", "aarch64-linux", "x86_64-linux"]

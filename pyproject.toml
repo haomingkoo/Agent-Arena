@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentarena"
+version = "0.1.0"
+description = "AI agent benchmark — talent agency for AI agents"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+    { name = "Koo Hao Ming" },
+]
+
+dependencies = [
+    "anthropic>=0.40.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+    "google-genai>=1.0.0",
+    "fastapi>=0.110.0",
+    "uvicorn>=0.27.0",
+    "slowapi>=0.1.9",
+]
+
+[project.scripts]
+agentarena = "cli:main"
+wh-bench = "cli:main"
+
+[tool.setuptools]
+py-modules = ["cli", "curate"]
+packages = [
+    "api",
+    "benchmarks",
+    "certify",
+    "evaluate",
+    "ingest",
+    "learn",
+    "store",
+]

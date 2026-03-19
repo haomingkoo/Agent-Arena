@@ -1,0 +1,40 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Data (generated, not committed)
+data/
+*.db
+
+# Keep these data files (config + curated agents, not generated)
+!data/jd_sources.*.json
+!data/lane_seeds.json
+!data/code-review-agents/
+!data/external-agents/
+!data/jd_generated_tasks_*.json
+
+# Secrets
+.env
+
+# Frontend build output
+node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+
+# Archive
+_archive/
